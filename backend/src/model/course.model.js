@@ -8,6 +8,7 @@ const CourseSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User", required: true
         },
+        status: { type: String, default: "pending" },
         students: { type: Number, default: 0, min: 0 },
         enrolledStudents: [
             {

@@ -11,9 +11,10 @@ import { useEffect } from "react";
 const InstructorDashboard = () => {
     const dispatch = useDispatch();
     const [stats, setStats] = useState({
-        publishedCount: 0,
-        unpublishedCount: 0,
+        totalCourses: 0,
+        totalUnpublished: 0,
         totalStudents: 0,
+        totalEarnings: 0,
     });
 
     const { courses, refresh, loading } = useSelector((state) => state.instructor);
@@ -25,11 +26,13 @@ const InstructorDashboard = () => {
                 withCredentials: true,
             });
             toast.success(data.message);
-            dispatch(setRefresh(!refresh)); // trigger refetch
+            dispatch(setRefresh(!refresh));
+            fetchStats()// trigger refetch
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to publish course");
         }
     };
+
 
     const fetchStats = async () => {
         try {
@@ -71,18 +74,22 @@ const InstructorDashboard = () => {
                 </div>
 
                 {/* Stats Section */}
-                <div className="flex gap-4 items-center max-sm:flex-col justify-between">
+                <div className="grid grid-cols-2 justify-between gap-4 items-center">
                     <div className="btn btn-accent btn-dash flex justify-between w-full max-w-xs">
                         <p>No. of Courses Published:</p>
-                        <p>{stats?.publishedCount || 0}</p>
+                        <p>{stats?.totalCourses || 0}</p>
                     </div>
                     <div className="btn btn-secondary btn-dash flex justify-between w-full max-w-xs">
                         <p>Students Enrolled:</p>
                         <p>{stats?.totalStudents || 0}</p>
                     </div>
                     <div className="btn btn-info btn-dash flex justify-between w-full max-w-xs">
+                        <p>totalEarnings :</p>
+                        <p>{stats?.totalEarnings || 0}</p>
+                    </div>
+                    <div className="btn btn-info btn-dash flex justify-between w-full max-w-xs">
                         <p>Unpublished Courses:</p>
-                        <p>{stats?.unpublishedCount || 0}</p>
+                        <p>{stats?.totalUnpublished || 0}</p>
                     </div>
                 </div>
             </div>
@@ -92,9 +99,9 @@ const InstructorDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     {courses.map((course) => (
-                        <div key={course._id} className="p-4 bg-slate-600 shadow rounded-xl border">
-                            <Link to={`/course/${course._id}`}>
-                                <h2 className="text-lg font-semibold ">{course.title}</h2>
+                        <div key={course._id} className="bg-gray-800 text-white p-4 rounded-xl shadow-xl hover:scale-105 transform transition-all">
+                            <div>
+                                <Link to={`/course/${course._id}`} className="text-lg font-semibold ">{course.title}</Link>
                                 <p className="text-sm ">{course.description}</p>
                                 <p className="mt-2 text-gray-200">
                                     Status:{" "}
@@ -116,7 +123,7 @@ const InstructorDashboard = () => {
                                         {course.isPublished ? "Unpublish" : "Publish"}
                                     </button>
                                 </div>
-                            </Link>
+                            </div>
                         </div>
                     ))}
                 </div>

@@ -47,12 +47,21 @@ const Navbar = () => {
                             </div>
                         )
                     }
-                    {user && (
-                        <Link
-                            to={user.role === 'instructor' ? '/instructor/dashboard' : '/student/dashboard'}
-                            className='btn btn-outline'
-                        >
-                            View Dashboard
+                    {user && user.role === "student" && (
+                        <Link to="/student/dashboard" className="btn btn-outline">
+                            Student Dashboard
+                        </Link>
+                    )}
+
+                    {user && user.role === "instructor" && (
+                        <Link to="/instructor/dashboard" className="btn btn-outline">
+                            Instructor Dashboard
+                        </Link>
+                    )}
+
+                    {user && user.role === "admin" && (
+                        <Link to="/admin-dashboard" className="btn btn-outline">
+                            Admin Dashboard
                         </Link>
                     )}
 

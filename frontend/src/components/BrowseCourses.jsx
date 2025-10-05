@@ -7,7 +7,6 @@ import { useGetAllCourses } from '../hooks/useGetAllCourses';
 const BrowseCourses = () => {
     const { loading, course } = useSelector((store) => store.course);
     useGetAllCourses();
-
     if (loading) return <p>Loading your courses...</p>;
     if (course?.length === 0) return <p>You have not enrolled in any courses yet.</p>;
     return (
@@ -22,6 +21,7 @@ const BrowseCourses = () => {
                                         View
                                     </Link></div>
                                 <div className='grid grid-cols-2 gap-2 max-sm:grid-cols-1'>
+                                    <p className="mb-2">Instructor: {course.instructorId.fullname}</p>
                                     <p className="mb-2">Level: {course.level}</p>
                                     <p className="mb-2">Duration: {course.duration}</p>
                                     <p className="mb-2">Price: ${course.price}</p>

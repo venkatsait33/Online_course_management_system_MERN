@@ -11,6 +11,10 @@ import Student from './components/dashboard/Student'
 import ProtectedRoute from './utils/ProtectedRoute'
 import InstructorDashboard from './components/dashboard/InstructorDashboard'
 import CreateCourse from './components/course/CreateCourse'
+import Admin_Login from './pages/Admin_Login'
+import Admin_Signup from './pages/Admin_Signup'
+import AdminDashboard from './components/dashboard/AdminDashboard'
+import InstructorProfile from './components/InstructorProfile'
 
 function App() {
   return (
@@ -34,6 +38,10 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path='/create-course' element={<CreateCourse />} />
+        <Route path='/admin-login' element={<Admin_Login />} />
+        <Route path='/admin-signup' element={<Admin_Signup />} />
+        <Route path='/admin-dashboard' element={<AdminDashboard />} />
+        <Route path='/InstructorProfile/:id' element={<InstructorProfile />} />
       </Routes>
 
     </>

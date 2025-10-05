@@ -23,7 +23,6 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(input);
     if (!validateEmail(input.email)) {
       toast.error('Please enter valid email');
       return;

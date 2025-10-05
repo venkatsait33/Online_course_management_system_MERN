@@ -33,15 +33,11 @@ const CreateCourse = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const { title, description, duration, level, price, image } = courseData;
     if (!title || !description || !duration || !level || !price || !image) {
       toast.error("Please fill in all fields");
       return;
     }
-
-    console.log(courseData);
-
     try {
       dispatch(setLoading(true));
       const { data } = await axios.post(`${COURSE_API_END_POINT}/create-course`, courseData, {
