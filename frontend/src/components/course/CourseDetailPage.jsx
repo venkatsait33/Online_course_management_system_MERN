@@ -29,8 +29,6 @@ const CourseDetailPage = () => {
 
     const isEnrolled = user && course?.enrolledStudents?.includes(user._id);
 
-    console.log(course);
-
     const handleEnroll = async () => {
         try {
             const { data } = await axios.post(`${COURSE_API_END_POINT}/${id}/enroll`, {}, {

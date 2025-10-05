@@ -10,15 +10,11 @@ const InstructorProfile = () => {
     const [loading, setLoading] = useState(true);
     const [instructor, setInstructor] = useState(null);
     const { id } = useParams()
-
-    console.log(id);
-
     const fetchInstructorCourses = async () => {
         try {
             const { data } = await axios.get(`${COURSE_API_END_POINT}/${id}/instructor/courses`, {
                 withCredentials: true,
             });
-            console.log(data);
             setCourses(data.courses);
             setInstructor(data.instructor);
             setLoading(false);
@@ -28,9 +24,6 @@ const InstructorProfile = () => {
             setLoading(false);
         }
     };
-
-    console.log(courses);
-
     useEffect(() => {
         fetchInstructorCourses();
     }, []);

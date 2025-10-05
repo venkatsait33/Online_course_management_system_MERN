@@ -27,18 +27,18 @@ const Navbar = () => {
 
     return (
         <div>
-            <div className="navbar bg-base-100 shadow-sm">
-                <div className="flex-1 navbar-start">
+            <div className="navbar bg-base-100 shadow-sm mb-4">
+                <div className="flex-1 md:navbar-start">
                     <Link to='/' className="btn btn-ghost text-base">Course Management System</Link>
                 </div>
-                <div className="flex gap-2 justify-center items-center navbar-center">
+                <div className="flex gap-2 justify-center items-center md:navbar-center">
                     <div>
                         <Link to='/browse' className='btn btn-ghost'>
                             Browse Course
                         </Link>
                     </div>
                 </div>
-                <div className='navbar-end flex gap-2'>
+                <div className='md:navbar-end flex gap-2'>
                     {
                         !user && (
                             <div className='flex items-center gap-2'>
