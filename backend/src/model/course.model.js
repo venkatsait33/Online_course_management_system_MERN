@@ -1,6 +1,13 @@
 // models/Course.js
 import mongoose from "mongoose";
 
+const lectureSchema = new mongoose.Schema({
+    title: { type: String, required: true },
+    videoUrl: { type: String, required: true },
+    description: { type: String },
+
+});
+
 const CourseSchema = new mongoose.Schema(
     {
         title: { type: String, required: true, trim: true, maxlength: 200 },
@@ -26,7 +33,16 @@ const CourseSchema = new mongoose.Schema(
         level: { type: String, enum: ["Beginner", "Intermediate", "Advanced"], default: "Beginner" },
         description: { type: String, trim: true, maxlength: 2000 },
         image: { type: String, trim: true },
-        isPublished: { type: Boolean, default: true }
+        isPublished: { type: Boolean, default: true },
+        lectures: [lectureSchema],
+
+        // Each student's progress (lecture IDs marked as viewed)
+        progressTracking: [
+            {
+                studentId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+                viewedLectures: [{ type: mongoose.Schema.Types.ObjectId }],
+            },
+        ],
     },
     {
         timestamps: true,

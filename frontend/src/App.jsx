@@ -15,6 +15,8 @@ import Admin_Login from './pages/Admin_Login'
 import Admin_Signup from './pages/Admin_Signup'
 import AdminDashboard from './components/dashboard/AdminDashboard'
 import InstructorProfile from './components/InstructorProfile'
+import InstructorCourseDetailPage from './components/Instructor/InstructorCourseDetailPage'
+import WatchLecture from './components/Instructor/WatchLecture'
 
 function App() {
   return (
@@ -37,11 +39,16 @@ function App() {
             <InstructorDashboard />
           </ProtectedRoute>
         } />
+
+        <Route path='/instructor/course/:id' element={<InstructorCourseDetailPage />} />
+
+
         <Route path='/create-course' element={<CreateCourse />} />
         <Route path='/admin-login' element={<Admin_Login />} />
         <Route path='/admin-signup' element={<Admin_Signup />} />
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
         <Route path='/InstructorProfile/:id' element={<InstructorProfile />} />
+        <Route path=":courseId/lecture/:lectureId" element={ <WatchLecture/>} />
       </Routes>
 
     </>

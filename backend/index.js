@@ -6,6 +6,7 @@ import connectDB from './src/database/db.js';
 import userRoutes from './src/routes/user.routes.js'
 import courseRoutes from './src/routes/course.routes.js'
 import adminRoutes from './src/routes/admin.routes.js'
+import lectureRoutes from './src/routes/lecture.routes.js'
 
 dotenv.config({});
 const app = express();
@@ -25,6 +26,7 @@ app.use(cors({
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/course', courseRoutes);
 app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/lecture', lectureRoutes);
 
 
 

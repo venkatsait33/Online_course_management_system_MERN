@@ -59,7 +59,7 @@ const InstructorDashboard = () => {
 
     useEffect(() => {
         fetchStats();
-    }, [])
+    }, [refresh])
 
     if (loading) return <div className="text-center mt-10 text-xl">Loading...</div>;
 
@@ -101,8 +101,8 @@ const InstructorDashboard = () => {
                     {courses.map((course) => (
                         <div key={course._id} className="bg-gray-800 text-white p-4 rounded-xl shadow-xl hover:scale-105 transform transition-all">
                             <div>
-                                <Link to={`/course/${course._id}`} className="text-lg font-semibold ">{course.title}</Link>
-                                <p className="text-sm ">{course.description}</p>
+                                <Link to={`/instructor/course/${course._id}`} className="text-lg font-semibold ">{course?.title}</Link>
+                                <p className="text-sm ">{course?.description}</p>
                                 <p className="mt-2 text-gray-200">
                                     Status:{" "}
                                     <span
