@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { LECTURE_API_END_POINT } from "../../utils/apiEndPoints";
 import { Link } from "react-router-dom";
-import BackButton from "../BackButton";
+import BackButton from "../BackButton.jsx";
 
 const LectureList = ({ courseId, lectures, refreshLectures }) => {
 

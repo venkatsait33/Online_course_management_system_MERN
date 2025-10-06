@@ -3,11 +3,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { LECTURE_API_END_POINT } from "../../utils/apiEndPoints";
-import { useCallback } from "react";
-import BackButton from "../BackButton";
+import BackButton from "../BackButton.jsx";
 
 const WatchLecture = () => {
- 
+
   const { courseId, lectureId } = useParams();
   const [lecture, setLecture] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -68,7 +67,7 @@ const WatchLecture = () => {
           className="rounded-xl"
         ></iframe>
       </div>
-      
+
       {/* Description */}
       <p className="text-gray-700 mb-3">{lecture?.description || "No description provided."}</p>
 
