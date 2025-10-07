@@ -15,7 +15,11 @@ const CourseSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: "User", required: true
         },
-        status: { type: String, default: "pending" },
+        status: {
+            type: String,
+            enum: ["pending", "approved", "rejected"],
+            default: "pending"
+        },
         students: { type: Number, default: 0, min: 0 },
         enrolledStudents: [
             {
@@ -33,7 +37,7 @@ const CourseSchema = new mongoose.Schema(
         level: { type: String, enum: ["Beginner", "Intermediate", "Advanced"], default: "Beginner" },
         description: { type: String, trim: true, maxlength: 2000 },
         image: { type: String, trim: true },
-        isPublished: { type: Boolean, default: true },
+        isPublished: { type: Boolean, default: false },
         lectures: [lectureSchema],
 
         // Each student's progress (lecture IDs marked as viewed)

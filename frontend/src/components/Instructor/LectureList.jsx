@@ -3,9 +3,8 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { LECTURE_API_END_POINT } from "../../utils/apiEndPoints";
 import { Link } from "react-router-dom";
-import BackButton from "../BackButton.jsx";
 
-const LectureList = ({ courseId, lectures, refreshLectures }) => {
+const LectureList = ({ courseId, fetchCourse, lectures, }) => {
 
   const handleDelete = async (lectureId) => {
     try {
@@ -14,7 +13,7 @@ const LectureList = ({ courseId, lectures, refreshLectures }) => {
         { withCredentials: true }
       );
       toast.success("Lecture deleted successfully");
-      refreshLectures();
+      fetchCourse();
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to delete lecture");
     }
@@ -25,9 +24,7 @@ const LectureList = ({ courseId, lectures, refreshLectures }) => {
 
   return (
     <div className="mt-4">
-      <div>
-        <BackButton />
-      </div>
+    
       <h2 className="text-lg font-semibold mb-2">Lectures</h2>
       <div className="flex flex-col gap-3">
         {lectures.map((lecture, index) => (

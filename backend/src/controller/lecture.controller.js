@@ -63,7 +63,7 @@ export const markLectureViewed = async (req, res) => {
         if (!course) return res.status(404).json({ message: "Course not found" });
 
         // Student must be enrolled
-        if (!course.students.includes(studentId)) {
+        if (!course.enrolledStudents.includes(studentId)) {
             return res.status(403).json({ message: "Not enrolled in this course" });
         }
 

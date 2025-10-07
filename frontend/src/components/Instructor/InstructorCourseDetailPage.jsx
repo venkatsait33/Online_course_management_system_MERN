@@ -47,8 +47,8 @@ const InstructorCourseDetailPage = () => {
                 <p className="mb-2">Students Enrolled: {course?.students}</p>
             </div>
 
-            <AddLectureForm courseId={id} />
-            <LectureList courseId={id} lectures={lecture} />
+            <AddLectureForm courseId={id} fetchCourse={fetchCourse} />
+            <LectureList courseId={id} lectures={lecture} fetchCourse={fetchCourse} />
 
         </div>
     );

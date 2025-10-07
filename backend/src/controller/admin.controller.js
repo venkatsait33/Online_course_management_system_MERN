@@ -169,18 +169,13 @@ export const getAllCourses = async (req, res) => {
 export const updateCourseStatus = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status } = req.body; // expected values: "approved" or "rejected"
+        const { isPublished } = req.body;
 
-        if (!["approved", "rejected"].includes(status)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid status value",
-            });
-        }
+        const status = isPublished ? "approved" : "rejected";
 
         const course = await Course.findByIdAndUpdate(
             id,
-            { status },
+            { status, isPublished },
             { new: true }
         );
 
@@ -204,6 +199,7 @@ export const updateCourseStatus = async (req, res) => {
         });
     }
 };
+
 
 // ✅ 4. Get Reports - number of students enrolled per course
 export const getEnrollmentReport = async (req, res) => {

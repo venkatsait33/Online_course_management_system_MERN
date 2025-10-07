@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { LECTURE_API_END_POINT } from "../../utils/apiEndPoints";
 
-const AddLectureForm = ({ courseId }) => {
+const AddLectureForm = ({ courseId, fetchCourse }) => {
     const [title, setTitle] = useState("");
     const [videoUrl, setVideoUrl] = useState("");
     const [description, setDescription] = useState("");
@@ -21,6 +21,7 @@ const AddLectureForm = ({ courseId }) => {
             setTitle("");
             setVideoUrl("");
             setDescription("");
+            fetchCourse();
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to add lecture");
         }

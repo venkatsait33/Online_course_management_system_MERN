@@ -48,23 +48,39 @@ const CourseDetailPage = () => {
         }
     };
 
-    // ✅ Mark lecture as viewed
     const handleMarkViewed = async (lectureId) => {
         try {
-            const { data } = await axios.post(
+            const { data } = await axios.put(
                 `${LECTURE_API_END_POINT}/${id}/lectures/${lectureId}/view`,
                 {},
                 { withCredentials: true }
             );
-            setViewedLectures(data.viewedLectures);
+
+            // Add new lecture to viewed list safely
+            setViewedLectures((prev) =>
+                prev.includes(lectureId)
+                    ? prev
+                    : [...prev, lectureId]
+            );
+
+            toast.success("Lecture marked as viewed");
         } catch (error) {
             toast.error("Failed to mark lecture as viewed");
         }
     };
 
+
     if (loading) return <p>Loading...</p>;
     if (!course) return <p>Course not found</p>;
 
+    const userProgress = course.progressTracking?.find(
+        (entry) => entry.studentId === user._id
+    );
+
+    const viewedCount = userProgress?.viewedLectures?.length || 0;
+    const totalLectures = course.lectures.length;
+
+    const progress = Math.round((viewedCount / totalLectures) * 100);
 
     return (
         <div className="p-6 text-white">
@@ -122,6 +138,14 @@ const CourseDetailPage = () => {
                 )}
             </div>
 
+            {/* ✅ Progress Tracker */}
+            {isEnrolled && course.lectures?.length > 0 && (
+                <div className="mt-6 bg-gray-600 p-4 rounded-lg text-white">
+                    <h4 className="font-semibold text-lg mb-2">Progress</h4>
+                    Progress: {viewedCount}/{totalLectures} lectures ({progress}%)
+                </div>
+            )}
+
             {/* ✅ Lectures Section */}
             <div className="mt-6 bg-gray-700 text-white rounded-xl p-4 shadow-lg">
                 <h3 className="text-xl font-bold mb-4">Lectures</h3>
@@ -130,14 +154,22 @@ const CourseDetailPage = () => {
                 ) : (
                     <ul className="space-y-3">
                         {course.lectures.map((lecture, index) => {
+                            // Find progress entry for the current student
+                            const userProgress = course.progressTracking?.find(
+                                (entry) => entry.studentId === user._id
+                            );
+
+                            // If found, get the viewedLectures for that student
+                            const viewedLectures = userProgress?.viewedLectures || [];
                             const viewed = viewedLectures.includes(lecture._id);
+
                             return (
                                 <li
                                     key={lecture._id}
                                     className="flex justify-between items-center bg-gray-800 p-3 rounded-lg"
                                 >
                                     <span>
-                                        {index + 1}. {lecture?.title}
+                                        {index + 1}. {lecture.title}
                                     </span>
 
                                     <div className="flex gap-3 items-center">
@@ -168,24 +200,13 @@ const CourseDetailPage = () => {
                                 </li>
                             );
                         })}
+
+
                     </ul>
                 )}
             </div>
 
-            {/* ✅ Progress Tracker */}
-            {isEnrolled && course.lectures?.length > 0 && (
-                <div className="mt-6 bg-gray-600 p-4 rounded-lg text-white">
-                    <h4 className="font-semibold text-lg mb-2">Progress</h4>
-                    <p>
-                        {viewedLectures.length}/{course.lectures.length} lectures viewed
-                    </p>
-                    <progress
-                        className="progress progress-success w-full"
-                        value={viewedLectures.length}
-                        max={course.lectures.length}
-                    ></progress>
-                </div>
-            )}
+           
         </div>
     );
 };

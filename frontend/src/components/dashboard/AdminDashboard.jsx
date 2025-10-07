@@ -36,19 +36,22 @@ const AdminDashboard = () => {
     };
 
     // Approve / Reject Course
-    const handleStatusChange = async (id, status) => {
+    const handleStatusChange = async (id, publish) => {
         try {
             const { data } = await axios.put(
                 `${ADMIN_API_END_POINT}/course/${id}/status`,
-                { isPublished: status },
-                { withCredentials: true }
+                { isPublished: Boolean(publish) }, // ✅ ensure it's a Boolean
+                { headers: { "Content-Type": "application/json" }, withCredentials: true }
             );
+
             toast.success(data.message);
-            fetchCourses();
+            fetchCourses(); // refresh the table
         } catch (error) {
+            console.error(error);
             toast.error(error.response?.data?.message || "Failed to update status");
         }
     };
+
 
     useEffect(() => {
         fetchCourses();
@@ -103,28 +106,32 @@ const AdminDashboard = () => {
                                     <td className="p-2">₹{course.price}</td>
                                     <td className="p-2">{course.totalEnrolled}</td>
                                     <td className="p-2">
-                                        {course.isPublished ? (
+                                        {course.status === "approved" ? (
                                             <span className="text-green-600 font-medium">Published</span>
+                                        ) : course.status === "rejected" ? (
+                                            <span className="text-red-600 font-medium">Rejected</span>
                                         ) : (
-                                            <span className="text-red-600 font-medium">Unpublished</span>
+                                            <span className="text-yellow-600 font-medium">Pending</span>
                                         )}
+
                                     </td>
                                     <td className="p-2 text-center">
                                         {course.isPublished ? (
                                             <button
                                                 className="btn btn-sm btn-error"
-                                                onClick={() => handleStatusChange(course._id, false)}
+                                                onClick={() => handleStatusChange(course._id, false)} // Reject
                                             >
                                                 Reject
                                             </button>
                                         ) : (
                                             <button
                                                 className="btn btn-sm btn-success"
-                                                onClick={() => handleStatusChange(course._id, true)}
+                                                onClick={() => handleStatusChange(course._id, true)} // Approve
                                             >
                                                 Approve
                                             </button>
                                         )}
+
                                     </td>
                                 </tr>
                             ))
