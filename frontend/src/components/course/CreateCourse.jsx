@@ -16,6 +16,7 @@ const CreateCourse = () => {
     description: "",
     duration: "",
     level: "",
+    category: "",
     price: '',
     image: ''
   });
@@ -25,16 +26,15 @@ const CreateCourse = () => {
     setCourseData({
       ...courseData,
       // convert price to Number
-      [name]: name === 'price' ? Number(value) :
-        name === 'level' ? value.charAt(0).toUpperCase() + value.slice(1).toLowerCase() : value
+      [name]: name === 'price' ? Number(value) : value
     });
   };
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { title, description, duration, level, price, image } = courseData;
-    if (!title || !description || !duration || !level || !price || !image) {
+    const { title, description, duration, level, price, image, category } = courseData;
+    if (!title || !description || !duration || !level || !price || !image || !category) {
       toast.error("Please fill in all fields");
       return;
     }
@@ -47,7 +47,7 @@ const CreateCourse = () => {
 
       if (data.success) {
         toast.success(data.message);
-        setCourseData({ title: "", description: "", duration: "", level: "", price: '', image: '' });
+        setCourseData({ title: "", description: "", duration: "", level: "", price: '', image: '', category: '' });
         navigate("/instructor/dashboard");
       }
     } catch (error) {
@@ -108,6 +108,21 @@ const CreateCourse = () => {
               className="input input-bordered w-full"
               placeholder="100, 200, 300"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Category</label>
+            <select
+              name="category"
+              value={courseData.category}
+              onChange={handleChange}
+              className="select select-bordered w-full"
+            >
+              <option value="">Select category</option>
+              <option value="React">React</option>
+              <option value="Node.js">Node.js</option>
+              <option value="JavaScript">JavaScript</option>
+              <option value="Python">Python</option>
+            </select>
           </div>
           <div>
             <label className="block text-sm font-semibold text-gray-700 mb-1">Image (past image link here)</label>

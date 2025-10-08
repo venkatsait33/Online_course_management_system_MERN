@@ -3,7 +3,7 @@ import { User } from "../model/user.model.js";
 
 export const createCourse = async (req, res) => {
     try {
-        const { title, description, duration, level, price, image } = req.body;
+        const { title, description, duration, level, price, image, category } = req.body;
 
         // Ensure the logged-in user is an instructor
         if (!req.user || req.user.role !== "instructor") {
@@ -11,7 +11,7 @@ export const createCourse = async (req, res) => {
         }
 
         // Validate required fields
-        if (!title || !description || !duration || !level || !price || !image) {
+        if (!title || !description || !duration || !level || !price || !image || !category) {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
 
@@ -31,7 +31,8 @@ export const createCourse = async (req, res) => {
             level: formattedLevel,
             price: numericPrice,
             image,
-            instructorId: req.user._id
+            instructorId: req.user._id,
+            category
         });
 
         await course.save();

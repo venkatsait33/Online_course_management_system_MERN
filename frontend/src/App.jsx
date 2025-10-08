@@ -17,6 +17,7 @@ import AdminDashboard from './components/dashboard/AdminDashboard'
 import InstructorProfile from './components/InstructorProfile'
 import InstructorCourseDetailPage from './components/Instructor/InstructorCourseDetailPage'
 import WatchLecture from './components/Instructor/WatchLecture'
+import PageNotFound from './pages/PageNotFound'
 
 function App() {
   return (
@@ -27,7 +28,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/browse' element={<BrowseCourses />} />
-        <Route path='/course_management' element={<Instructor_Course_Management />} />
+        <Route path='/course_management' element={<ProtectedRoute><Instructor_Course_Management /></ProtectedRoute>} />
         <Route path='/course/:id' element={<CourseDetailPage />} />
         <Route path='/student/dashboard' element={
           <ProtectedRoute>
@@ -39,16 +40,18 @@ function App() {
             <InstructorDashboard />
           </ProtectedRoute>
         } />
-
-        <Route path='/instructor/course/:id' element={<InstructorCourseDetailPage />} />
-
-
-        <Route path='/create-course' element={<CreateCourse />} />
+        <Route path='/instructor/course/:id' element={<ProtectedRoute><InstructorCourseDetailPage /></ProtectedRoute>} />
+        <Route path='/create-course' element={<ProtectedRoute><CreateCourse /></ProtectedRoute>} />
         <Route path='/admin/login' element={<Admin_Login />} />
         <Route path='/admin/signup' element={<Admin_Signup />} />
-        <Route path='/admin-dashboard' element={<AdminDashboard />} />
-        <Route path='/InstructorProfile/:id' element={<InstructorProfile />} />
-        <Route path=":courseId/lecture/:lectureId" element={ <WatchLecture/>} />
+        <Route path='/admin-dashboard' element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        } />
+        <Route path='/InstructorProfile/:id' element={<ProtectedRoute><InstructorProfile /></ProtectedRoute>} />
+        <Route path=":courseId/lecture/:lectureId" element={<ProtectedRoute><WatchLecture /></ProtectedRoute>} />
+        <Route path='*' element={<PageNotFound/>} />
       </Routes>
 
     </>

@@ -69,7 +69,6 @@ const CourseDetailPage = () => {
         }
     };
 
-
     if (loading) return <p>Loading...</p>;
     if (!course) return <p>Course not found</p>;
 
@@ -112,10 +111,13 @@ const CourseDetailPage = () => {
             {/* Course Info */}
             <div className="flex flex-col gap-3 p-3 bg-gray-800 mt-4 rounded-md shadow-2xl">
                 <p>{course.description}</p>
-                <p>Level: {course.level}</p>
-                <p>Duration: {course.duration}</p>
-                <p>Price: ${course.price}</p>
-                <p>Students Enrolled: {course.enrolledStudents?.length}</p>
+                <div className='grid grid-cols-2 gap-3 '>
+                    <p>Level: {course.level}</p>
+                    <p>Duration: {course.duration}</p>
+                    <p>Price: ${course.price}</p>
+                    <p>Students Enrolled: {course.enrolledStudents?.length}</p>
+                    <p>Category: {course?.category || 'NA'}</p>
+                </div>
             </div>
 
             {/* Instructor Info */}
@@ -171,7 +173,6 @@ const CourseDetailPage = () => {
                                     <span>
                                         {index + 1}. {lecture.title}
                                     </span>
-
                                     <div className="flex gap-3 items-center">
                                         {/* Watch Lecture */}
                                         {isEnrolled ? (
@@ -200,13 +201,9 @@ const CourseDetailPage = () => {
                                 </li>
                             );
                         })}
-
-
                     </ul>
                 )}
-            </div>
-
-           
+            </div>           
         </div>
     );
 };
