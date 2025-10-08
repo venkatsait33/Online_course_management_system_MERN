@@ -65,7 +65,8 @@ const InstructorDashboard = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-6 text-gray-800">Instructor Dashboard</h1>
+            <h1 className="text-2xl font-bold mb-3 text-gray-800">Instructor Dashboard</h1>
+            <p className=" divider "></p>
             <div className="p-4 flex flex-col gap-3">
                 {/* Header */}
                 <div className="flex justify-between items-center">
@@ -99,11 +100,11 @@ const InstructorDashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                     {courses.map((course) => (
-                        <div key={course._id} className="bg-gray-800 text-white p-4 rounded-xl shadow-xl hover:scale-105 transform transition-all">
+                        <div key={course._id} className="bg-base-100  p-4 rounded-xl shadow-xl hover:scale-105 transform transition-all">
                             <div>
                                 <Link to={`/instructor/course/${course._id}`} className="text-lg font-semibold ">{course?.title}</Link>
                                 <p className="text-sm ">{course?.description}</p>
-                                <p className="mt-2 text-gray-200">
+                                <p className="mt-2 ">
                                     Status:{" "}
                                     <span
                                         className={`font-medium ${course.isPublished ? "text-green-600" : "text-red-500"}`}

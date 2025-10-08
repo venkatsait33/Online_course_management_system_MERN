@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { USER_API_END_POINT } from '../utils/apiEndPoints'
 import { setUser } from '../redux/slice/authSlice'
 import { toast } from 'react-toastify'
+import { GoSun } from 'react-icons/go'
+import { FaRegMoon } from 'react-icons/fa'
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth)
@@ -84,6 +86,21 @@ const Navbar = () => {
                             </ul>
                         </div>
                     }
+
+                    <div>
+                        <label className="swap swap-rotate">
+                            {/* this hidden checkbox controls the state */}
+                            <input
+                                type="checkbox"
+                                className="theme-controller"
+                                value="light"
+                            />
+                            {/* sun icon */}
+                            <GoSun className="w-8 h-8 fill-current swap-off" />
+                            {/* moon icon */}
+                            <FaRegMoon className="w-8 h-8 fill-current swap-on" />
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

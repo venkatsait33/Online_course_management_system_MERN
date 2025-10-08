@@ -23,14 +23,13 @@ const LectureList = ({ courseId, fetchCourse, lectures, }) => {
     return <p className="text-gray-400 text-center">No lectures added yet.</p>;
 
   return (
-    <div className="mt-4">
-    
+    <div className="mt-4 bg-base-300 shadow-2xl">    
       <h2 className="text-lg font-semibold mb-2">Lectures</h2>
       <div className="flex flex-col gap-3">
         {lectures.map((lecture, index) => (
           <div
             key={lecture._id}
-            className="p-3 border rounded-lg flex justify-between items-center bg-base-100"
+            className="p-3 border rounded-lg gap-3 flex justify-between items-center bg-base-100"
           >
             <div>
               <Link to={`/${courseId}/lecture/${lecture._id}`}>
@@ -38,7 +37,7 @@ const LectureList = ({ courseId, fetchCourse, lectures, }) => {
                   {index + 1}. {lecture.title}
                 </p>
               </Link>
-              <p className="text-sm text-gray-500">{lecture?.description}</p>
+              <p className="text-sm text-gray-400">{lecture?.description}</p>
             </div>
             <button
               onClick={() => handleDelete(lecture._id)}

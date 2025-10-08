@@ -28,7 +28,7 @@ const AddLectureForm = ({ courseId, fetchCourse }) => {
     };
 
     return (
-        <form onSubmit={handleAdd} className="space-y-3 bg-gray-50 p-4 rounded-md">
+        <form onSubmit={handleAdd} className="space-y-3 bg-base-100 shadow-2xl p-4 rounded-md">
             <input
                 type="text"
                 placeholder="Lecture Title"

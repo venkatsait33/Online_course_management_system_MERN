@@ -36,15 +36,17 @@ const InstructorCourseDetailPage = () => {
 
     return (
         <div className="p-6 flex flex-col gap-3">
-            <div className=' flex justify-between items-center p-4 rounded-xl shadow-xl bg-slate-500 h-24'>
+            <div className=' flex justify-between items-center p-4 rounded-xl shadow-xl bg-base-300 h-24'>
                 <h1 className="text-2xl font-bold">{course?.title}</h1>
             </div>
-            <div className='flex flex-col gap-3 p-3 bg-gray-800 mt-4 rounded-md shadow-2xl'>
-                <p className="mb-2">{course?.description}</p>
-                <p className="mb-2">Level: {course?.level}</p>
-                <p className="mb-2">Duration: {course?.duration}</p>
-                <p className="mb-2">Price: ${course?.price}</p>
-                <p className="mb-2">Students Enrolled: {course?.students}</p>
+            <div className='flex flex-col gap-3 p-3 bg-base-200 mt-4 rounded-md shadow-2xl'>
+                <p className="mb-2 text-base">{course?.description}</p>
+                <div className='grid grid-cols-2 max-sm:grid-cols-1 gap-3'>
+                    <p className="mb-2">Level: {course?.level}</p>
+                    <p className="mb-2">Duration: {course?.duration}</p>
+                    <p className="mb-2">Price: ${course?.price}</p>
+                    <p className="mb-2">Students Enrolled: {course?.students}</p>
+               </div>
             </div>
 
             <AddLectureForm courseId={id} fetchCourse={fetchCourse} />
