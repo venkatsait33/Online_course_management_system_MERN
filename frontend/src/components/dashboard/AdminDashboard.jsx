@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ADMIN_API_END_POINT } from "../../utils/apiEndPoints";
+import Charts from "../Charts";
 
 const AdminDashboard = () => {
     const [courses, setCourses] = useState([]);
-    const [report, setReport] = useState({});
+    const [report, setReport] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [summary, setSummary] = useState({});
 
     // Fetch all courses
     const fetchCourses = async () => {
@@ -16,6 +18,7 @@ const AdminDashboard = () => {
                 withCredentials: true,
             });
             if (data.success) setCourses(data.courses);
+            console.log(data);
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to load courses");
         } finally {
@@ -29,7 +32,7 @@ const AdminDashboard = () => {
             const { data } = await axios.get(`${ADMIN_API_END_POINT}/reports/enrollments`, {
                 withCredentials: true,
             });
-            if (data.success) setReport(data.report);
+            if (data.success) { setReport(data.report); setSummary(data.summary); }
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to load report");
         }
@@ -52,6 +55,8 @@ const AdminDashboard = () => {
         }
     };
 
+    console.log(summary);
+
 
     useEffect(() => {
         fetchCourses();
@@ -66,18 +71,22 @@ const AdminDashboard = () => {
             <h1 className="text-3xl font-bold mb-6 text-center">Admin Dashboard</h1>
 
             {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                <div className=" shadow p-4 rounded-xl text-center">
-                    <p className="">Total Courses</p>
-                    <p className="text-2xl font-semibold">{report.totalCourses || 0}</p>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div className=" shadow p-4 rounded-xl text-center">
                     <p className="">Total Instructors</p>
-                    <p className="text-2xl font-semibold">{report.totalInstructors || 0}</p>
+                    <p className="text-2xl font-semibold">{summary.totalInstructors || 0}</p>
                 </div>
                 <div className=" shadow p-4 rounded-xl text-center">
+                    <p className="">Total Courses</p>
+                    <p className="text-2xl font-semibold">{summary.totalCourses || 0}</p>
+                </div>               
+                <div className=" shadow p-4 rounded-xl text-center">
                     <p className="">Total Students Enrolled</p>
-                    <p className="text-2xl font-semibold">{report.totalStudents || 0}</p>
+                    <p className="text-2xl font-semibold">{summary.totalStudentsEnrolled || 0}</p>
+                </div>
+                <div className=" shadow p-4 rounded-xl text-center">
+                    <p className="">Total Course Revenue</p>
+                    <p className="text-2xl font-semibold">₹{summary.totalRevenue || 0}</p>
                 </div>
             </div>
 
@@ -144,6 +153,9 @@ const AdminDashboard = () => {
                         )}
                     </tbody>
                 </table>
+            </div>
+            <div>
+                <Charts report={report} />
             </div>
         </div>
     );

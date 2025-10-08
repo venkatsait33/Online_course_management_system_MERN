@@ -33,6 +33,7 @@ const CourseSchema = new mongoose.Schema(
         },
 
         price: { type: Number, required: true, min: 0 },
+        revenue: { type: Number, default: 0 },
         duration: { type: String, trim: true },
         level: { type: String, enum: ["Beginner", "Intermediate", "Advanced"], default: "Beginner" },
         description: { type: String, trim: true, maxlength: 2000 },

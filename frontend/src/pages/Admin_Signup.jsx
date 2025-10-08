@@ -30,7 +30,7 @@ const Admin_Signup = () => {
             toast.error('Please enter valid email');
             return;
         }
-       
+
         try {
             dispatch(setLoading(true));
             const res = await axios.post(`${ADMIN_API_END_POINT}/admin-signup`, input, {
@@ -99,7 +99,7 @@ const Admin_Signup = () => {
 
                         <div className="flex items-center">
                             Already have an account?
-                            <Link to='/admin-login' className="ml-2 link link-primary">
+                            <Link to='/admin/login' className="ml-2 link link-primary">
                                 Admin-Login
                             </Link>
                         </div>

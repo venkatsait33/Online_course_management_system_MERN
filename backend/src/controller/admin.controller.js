@@ -147,13 +147,15 @@ export const getAllCourses = async (req, res) => {
     try {
         const courses = await Course.find()
             .populate("instructorId", "fullname email")
-            .select("title status enrolledStudents instructorId");
+            .select("title status price revenue enrolledStudents instructorId");
 
         const formattedCourses = courses.map(course => ({
             _id: course._id,
             title: course.title,
             instructor: course.instructorId,
+            price: course.price,
             status: course.status,
+            revenue: course.revenue,
             totalEnrolled: course.enrolledStudents?.length || 0,
         }));
 
@@ -200,22 +202,51 @@ export const updateCourseStatus = async (req, res) => {
     }
 };
 
-
-// ✅ 4. Get Reports - number of students enrolled per course
 export const getEnrollmentReport = async (req, res) => {
     try {
-        const report = await Course.aggregate([
-            {
-                $project: {
-                    title: 1,
-                    totalEnrolled: { $size: "$enrolledStudents" },
-                },
-            },
-            { $sort: { totalEnrolled: -1 } },
-        ]);
+        // Fetch all courses
+        const courses = await Course.find().populate("instructorId", "fullname email");
+
+        // Calculate total enrolled students (sum of enrolledStudents across all courses)
+        const totalStudentsEnrolled = courses.reduce(
+            (sum, course) => sum + (course.enrolledStudents?.length || 0),
+            0
+        );
+
+        // Total number of courses
+        const totalCourses = courses.length;
+
+        // Count unique instructors
+        const uniqueInstructors = new Set(courses.map(c => c.instructorId?._id.toString()));
+        const totalInstructors = uniqueInstructors.size;
+        const totalRevenue = courses.reduce(
+            (sum, course) => sum + ((course.price || 0) * (course.enrolledStudents?.length || 0)),
+            0
+        );
+
+
+        // Individual course-wise report
+        const report = courses.map(course => ({
+            title: course.title,
+            instructor: course.instructorId?.fullname || "N/A",
+            totalEnrolled: course.enrolledStudents?.length || 0,
+            price: course.price,
+            revenue: course.revenue,
+            status: course.status,
+            revenue: (course.price || 0) * (course.enrolledStudents?.length || 0),
+        }));
+
+        // Sort by total enrolled
+        report.sort((a, b) => b.totalEnrolled - a.totalEnrolled);
 
         res.status(200).json({
             success: true,
+            summary: {
+                totalStudentsEnrolled,
+                totalCourses,
+                totalInstructors,
+                totalRevenue,
+            },
             report,
         });
     } catch (error) {
@@ -227,3 +258,4 @@ export const getEnrollmentReport = async (req, res) => {
         });
     }
 };
+

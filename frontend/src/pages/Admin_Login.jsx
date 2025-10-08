@@ -87,7 +87,7 @@ const Admin_Login = () => {
 
                                 <div className="flex items-center">
                                     Already have an account?
-                                    <Link to='/admin-signup' className="ml-2 link link-primary">
+                                    <Link to='/admin/signup' className="ml-2 link link-primary">
                                         Admin-Signup
                                     </Link>
                                 </div>

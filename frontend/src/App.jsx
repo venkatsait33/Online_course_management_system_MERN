@@ -44,8 +44,8 @@ function App() {
 
 
         <Route path='/create-course' element={<CreateCourse />} />
-        <Route path='/admin-login' element={<Admin_Login />} />
-        <Route path='/admin-signup' element={<Admin_Signup />} />
+        <Route path='/admin/login' element={<Admin_Login />} />
+        <Route path='/admin/signup' element={<Admin_Signup />} />
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
         <Route path='/InstructorProfile/:id' element={<InstructorProfile />} />
         <Route path=":courseId/lecture/:lectureId" element={ <WatchLecture/>} />
