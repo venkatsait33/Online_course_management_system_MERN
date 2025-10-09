@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_URL: http://localhost:8000
+    container_name: frontend_service
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    container_name: backend_service
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGO_URI=mongodb+srv://venkatsait33_db_user:xzna71IW2dMh7Kyt@cluster0.50ky9ax.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      - JWT_SECRET=xzna71IW2dMh7Kyt
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo_service
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

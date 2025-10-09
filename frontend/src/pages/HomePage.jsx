@@ -4,7 +4,7 @@ const HomePage = () => {
     return (
         <div className=' container w-screen h-screen flex-col flex justify-center items-center mx-auto'>
             <h1>
-                Build the frontend for an Online Course Management System. The application should allow
+                An Online Course Management System. The application should allow
             </h1>
             <ul>
                 <li> ● Students: Browse courses, enroll, track progress.</li>
