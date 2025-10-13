@@ -65,7 +65,7 @@ const InstructorDashboard = () => {
 
     return (
         <div className="p-6">
-            <h1 className="text-2xl font-bold mb-3 text-gray-800">Instructor Dashboard</h1>
+            <h1 className="text-2xl font-bold mb-3">Instructor Dashboard</h1>
             <p className=" divider "></p>
             <div className="p-4 flex flex-col gap-3">
                 {/* Header */}

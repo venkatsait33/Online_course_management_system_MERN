@@ -72,8 +72,8 @@ const CourseDetailPage = () => {
     if (loading) return <p>Loading...</p>;
     if (!course) return <p>Course not found</p>;
 
-    const userProgress = course.progressTracking?.find(
-        (entry) => entry.studentId === user._id
+    const userProgress = course?.progressTracking?.find(
+        (entry) => entry.studentId === user?._id
     );
 
     const viewedCount = userProgress?.viewedLectures?.length || 0;
@@ -151,14 +151,14 @@ const CourseDetailPage = () => {
             {/* ✅ Lectures Section */}
             <div className="mt-6 bg-gray-700 text-white rounded-xl p-4 shadow-lg">
                 <h3 className="text-xl font-bold mb-4">Lectures</h3>
-                {course.lectures?.length === 0 ? (
+                {course?.lectures?.length === 0 ? (
                     <p>No lectures added yet.</p>
                 ) : (
                     <ul className="space-y-3">
-                        {course.lectures.map((lecture, index) => {
+                        {course?.lectures?.map((lecture, index) => {
                             // Find progress entry for the current student
                             const userProgress = course.progressTracking?.find(
-                                (entry) => entry.studentId === user._id
+                                (entry) => entry?.studentId === user?._id
                             );
 
                             // If found, get the viewedLectures for that student
